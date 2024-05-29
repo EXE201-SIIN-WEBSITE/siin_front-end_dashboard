@@ -58,18 +58,13 @@ export default function MenuNav() {
             label: 'Product'
           },
           {
-            key: 'blog',
-            icon: <ContainerOutlined />,
-            label: 'Blog'
-          },
-          {
-            key: 'feedback',
-            icon: <StarOutlined />,
-            label: 'Feedback'
+            key: 'accessory',
+            icon: <ProductOutlined />,
+            label: 'Accessory'
           }
         ]}
       />
-      {/* <div
+      <div
         style={{
           alignItems: 'center',
           display: 'flex',
@@ -79,7 +74,7 @@ export default function MenuNav() {
       >
         <LogoutOutlined />
         <span>SignOut</span>
-      </div> */}
+      </div>
     </div>
   )
 }
