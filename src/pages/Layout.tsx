@@ -1,23 +1,23 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Button, Layout, theme } from 'antd'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import MenuNav from './UI/MenuNav'
-import { Outlet, useLocation, useParams } from 'react-router-dom'
 
 const { Header, Sider, Content } = Layout
 
 type Props = {
   children: React.ReactNode
 }
+
 const LayoutPage = ({ children }: Props) => {
-  const location = useLocation()
-  const { id } = useParams()
+  // const location = useLocation()
+  // const { id } = useParams()
   const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken()
 
-  const isNestedRoute = location.pathname.includes('/blog/new') || id
+  // const isNestedRoute = location.pathname.includes('/blog/new') || id
 
   return (
     <Layout>
@@ -47,7 +47,7 @@ const LayoutPage = ({ children }: Props) => {
             borderRadius: borderRadiusLG
           }}
         >
-          {isNestedRoute ? <Outlet /> : children}
+          {children} {/* {isNestedRoute ? : children} */}
         </Content>
       </Layout>
     </Layout>

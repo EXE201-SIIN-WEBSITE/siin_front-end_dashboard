@@ -1,14 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
+import NotFoundPage from '../pages/ContentPages/404'
+import AccessoryManagement from '../pages/ContentPages/AccessoryManagement'
 import DashBoard from '../pages/ContentPages/Dashboard'
-import LayoutPage from '../pages/Layout'
-import UserManagement from '../pages/ContentPages/UserManagement'
 import OrderManagement from '../pages/ContentPages/OrderManagement'
 import ProductManagement from '../pages/ContentPages/ProductManagement'
-import BlogManagement from '../pages/ContentPages/BlogManagement'
-import FeedbackManagement from '../pages/ContentPages/FeedbackManagement'
-import CreateBlog from '../pages/ContentPages/CreateBlog'
-import EditBlog from '../pages/ContentPages/EditBlog'
-import NotFoundPage from '../pages/ContentPages/404'
+import UserManagement from '../pages/ContentPages/UserManagement'
+import LayoutPage from '../pages/Layout'
 
 export default function ContentRouter() {
   return (
@@ -47,21 +44,10 @@ export default function ContentRouter() {
         }
       />
       <Route
-        path='/blog'
+        path='/accessory'
         element={
           <LayoutPage>
-            <BlogManagement />
-          </LayoutPage>
-        }
-      >
-        <Route path='new' element={<CreateBlog />} /> {/*A nested route!*/}
-        <Route path=':id' element={<EditBlog />} /> {/*A nested route!*/}
-      </Route>
-      <Route
-        path='/feedback'
-        element={
-          <LayoutPage>
-            <FeedbackManagement />
+            <AccessoryManagement />
           </LayoutPage>
         }
       />
