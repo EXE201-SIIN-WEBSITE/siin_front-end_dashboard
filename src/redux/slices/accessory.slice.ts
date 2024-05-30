@@ -1,30 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { deleteProduct, getProductId, getProducts } from '../actions/product.actions'
-import initialProductState from '../types/productRedux.type'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
+import { getAccessory } from '../actions/accessory.action'
+import initialAccessoryState from '../types/accessoryRedux.type'
 
-const productSlice = createSlice({
-  name: 'product',
-  initialState: initialProductState,
-  reducers: {
-    removeEditProduct: (state) => {
-      state.editProduct = null
-    }
-  },
+const accessorySlice = createSlice({
+  name: 'accessory',
+  initialState: initialAccessoryState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.fulfilled, (state, action) => {
-        state.products = action.payload
-      })
-      .addCase(getProductId.fulfilled, (state, action) => {
-        state.editProduct = action.payload
-      })
-      .addCase(deleteProduct.fulfilled, (state, action) => {
-        const updatedProduct = action.payload
-        const index = state.products.findIndex((product) => product.id === updatedProduct.id)
-        if (index !== -1) {
-          state.products[index] = updatedProduct
-        }
+      .addCase(getAccessory.fulfilled, (state, action) => {
+        state.accessories = action.payload
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),
@@ -58,5 +44,4 @@ const productSlice = createSlice({
       )
   }
 })
-export const { removeEditProduct } = productSlice.actions
-export default productSlice.reducer
+export default accessorySlice.reducer
