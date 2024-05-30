@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { http } from '../../utils/http'
 import { ResponseData } from '../../types/response.type'
 import { Product } from '../../types/product.type'
+import toast from 'react-hot-toast'
 
 interface GetProductsParams {
   signal: AbortSignal
@@ -15,9 +16,38 @@ export const getProducts = createAsyncThunk('product/getProducts', async ({ sign
     return response.data.data
   } catch (error: any) {
     if (error.name === 'AbortError') {
+      toast.error('Request was cancelled')
       return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
     }
-    return thunkAPI.rejectWithValue(error.response?.data || error)
+
+    if (error.name === 'AxiosError') {
+      const errorMessage = error.response?.data?.message || 'Something went wrong'
+      toast.error(errorMessage) // Hiển thị toast khi có lỗi
+      return thunkAPI.rejectWithValue(error.response?.data || error)
+    }
+    throw error
+  }
+})
+
+export const getProductId = createAsyncThunk('product/getProductId', async (id: number, thunkAPI) => {
+  try {
+    // Make the API call to fetch product details by ID
+    const response = await http.get<ResponseData<Product>>(`/product/${id}`)
+    return response.data.data
+  } catch (error: any) {
+    // Handle abort errors
+    if (error.name === 'AbortError') {
+      toast.error('Request was cancelled')
+      return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
+    }
+
+    // Handle Axios errors
+    if (error.name === 'AxiosError') {
+      const errorMessage = error.response?.data?.message || 'Something went wrong'
+      toast.error(errorMessage) // Display toast on error
+      return thunkAPI.rejectWithValue(error.response?.data || error)
+    }
+    throw error
   }
 })
 
