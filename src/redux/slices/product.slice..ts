@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getProducts } from '../actions/product.actions'
+import { getProductId, getProducts } from '../actions/product.actions'
 import initialProductState from '../types/productRedux.type'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
 
@@ -11,6 +11,9 @@ const productSlice = createSlice({
     builder
       .addCase(getProducts.fulfilled, (state, action) => {
         state.products = action.payload
+      })
+      .addCase(getProductId.fulfilled, (state, action) => {
+        state.editProduct = action.payload
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),

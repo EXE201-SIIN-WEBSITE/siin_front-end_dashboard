@@ -1,9 +1,7 @@
 import {
-  ContainerOutlined,
   PieChartOutlined,
   ProductOutlined,
   ShoppingCartOutlined,
-  StarOutlined,
   UserOutlined,
   LogoutOutlined
 } from '@ant-design/icons'
@@ -64,7 +62,7 @@ export default function MenuNav() {
           }
         ]}
       />
-      <div
+      {/* <div
         style={{
           alignItems: 'center',
           display: 'flex',
@@ -74,7 +72,7 @@ export default function MenuNav() {
       >
         <LogoutOutlined />
         <span>SignOut</span>
-      </div>
+      </div> */}
     </div>
   )
 }

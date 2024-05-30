@@ -11,7 +11,7 @@ interface ProductState {
 const initialProductState: ProductState = {
   products: [],
   editProduct: null,
-  loading: false,
+  loading: true,
   error: null,
   currentRequestId: undefined
 }
