@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { deleteProduct, getProductId, getProducts } from '../actions/product.actions'
+import { createProduct, deleteProduct, getProductId, getProducts, updateProduct } from '../actions/product.actions'
 import initialProductState from '../types/productRedux.type'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
 
@@ -25,6 +25,16 @@ const productSlice = createSlice({
         if (index !== -1) {
           state.products[index] = updatedProduct
         }
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        const updatedProduct = action.payload
+        const index = state.products.findIndex((product) => product.id === updatedProduct.id)
+        if (index !== -1) {
+          state.products[index] = updatedProduct
+        }
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.products.push(action.payload)
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),
