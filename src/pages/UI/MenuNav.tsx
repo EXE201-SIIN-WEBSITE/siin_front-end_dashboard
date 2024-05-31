@@ -1,10 +1,4 @@
-import {
-  PieChartOutlined,
-  ProductOutlined,
-  ShoppingCartOutlined,
-  UserOutlined,
-  LogoutOutlined
-} from '@ant-design/icons'
+import { PieChartOutlined, ProductOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
