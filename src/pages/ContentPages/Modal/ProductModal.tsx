@@ -12,6 +12,7 @@ import { removeEditProduct } from '../../../redux/slices/product.slice.'
 import { RootState, useAppDispatch } from '../../../redux/store'
 import { defaultFormProductValue, productSchema, updateProductValuesType } from '../../../schema/product.schema'
 import UploadCoverImage from '../../../utils/UploadCoverImage'
+import UploadImage from '../../../utils/UpLoadImage'
 
 export type FormProductModalProps = {
   isOpenModal: boolean
@@ -197,6 +198,7 @@ export default function ProductModal({ isOpenModal, setOpenModal }: FormProductM
               />
             </Col>
           </Row>
+          <UploadImage product={editProduct} />
         </Modal>
       </form>
     </>

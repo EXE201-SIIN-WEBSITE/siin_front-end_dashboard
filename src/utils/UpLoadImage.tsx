@@ -2,36 +2,35 @@ import { GetProp, Modal, Upload, UploadFile, UploadProps } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { deleteProductImage } from '../redux/actions/product.actions'
+import { deleteProductSubImage } from '../redux/actions/product.actions'
 import { useAppDispatch } from '../redux/store'
 import { Product } from '../types/product.type'
 
 type UploadImageProps = {
   product: Product | null
-  onCoverImageUpdate: (url: string) => void
 }
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
-const UploadCoverImage = ({ product, onCoverImageUpdate }: UploadImageProps) => {
+const UploadImage = ({ product }: UploadImageProps) => {
   const [previewOpen, setPreviewOpen] = useState(false)
+  const [previewImage, setPreviewImage] = useState('')
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const uploadFileList: UploadFile[] =
-      (product?.coverImage && [
-        {
-          uid: String(product?.coverImage),
+      (product?.SubImages &&
+        product?.SubImages.map((img) => ({
+          uid: String(img.id),
           name: 'image.png',
           status: 'done',
-          url: product?.coverImage ?? null
-        }
-      ]) ||
+          url: img.url ?? img.id
+        }))) ||
       []
 
     setFileList(uploadFileList)
-  }, [product?.coverImage])
+  }, [product?.SubImages])
 
   const handleCancel = () => setPreviewOpen(false)
 
@@ -43,27 +42,24 @@ const UploadCoverImage = ({ product, onCoverImageUpdate }: UploadImageProps) => 
     return isJpgOrPng
   }
 
-  const handleRemove = async () => {
-    dispatch(deleteProductImage(product?.id ?? 0))
-      .then((resultAction: any) => {
-        if (deleteProductImage.fulfilled.match(resultAction)) {
-          setFileList([])
-          onCoverImageUpdate('')
-          toast.success('Delete Image Successfully!')
-        } else {
-          toast.error('Delete Image Fail!')
-        }
-      })
-      .catch(() => {
+  const handleRemove = async (file: UploadFile) => {
+    try {
+      const resultAction = await dispatch(deleteProductSubImage(Number(file.uid)))
+      if (deleteProductSubImage.fulfilled.match(resultAction)) {
+        setFileList((prevFileList) => prevFileList.filter((item) => item.uid !== file.uid))
+        toast.success('Delete Image Successfully!')
+      } else {
         toast.error('Delete Image Fail!')
-      })
+      }
+    } catch (error) {
+      toast.error('Delete Image Fail!')
+    }
   }
 
   const onChange: UploadProps['onChange'] = ({ fileList: newFileList, file }) => {
-    setFileList(newFileList.slice(-1)) // Ensure only one image is in the list
+    setFileList(newFileList)
     if (file && file.status === 'done') {
-      onCoverImageUpdate(newFileList[0].response.data)
-      toast.success('Upload Image Post Successfully!')
+      toast.success('Upload Image Successfully!')
     } else if (file && file.status === 'error') {
       toast.error(`${file.name} file upload failed.`)
     }
@@ -78,10 +74,8 @@ const UploadCoverImage = ({ product, onCoverImageUpdate }: UploadImageProps) => 
         reader.onload = () => resolve(reader.result as string)
       })
     }
-    const image = new Image()
-    image.src = src
-    const imgWindow = window.open(src)
-    imgWindow?.document.write(image.outerHTML)
+    setPreviewImage(src)
+    setPreviewOpen(true)
   }
 
   return (
@@ -89,22 +83,23 @@ const UploadCoverImage = ({ product, onCoverImageUpdate }: UploadImageProps) => 
       <ImgCrop rotationSlider aspectSlider cropShape='rect' modalWidth={600}>
         <Upload
           name='file'
-          action={`http://172.171.207.227:8080/api/v1/product/upload-image/${product?.id}`}
+          action={`http://172.171.207.227:8080/api/v1/product-sub-image/${product?.id}`}
           listType='picture-card'
           beforeUpload={beforeUpload}
           fileList={fileList}
           onRemove={handleRemove}
           onChange={onChange}
           onPreview={onPreview}
+          multiple
         >
-          {fileList.length < 1 && '+ Upload'}
+          {fileList.length < 4 && '+ Upload'}
         </Upload>
       </ImgCrop>
       <Modal open={previewOpen} footer={null} onCancel={handleCancel}>
-        <img alt='example' style={{ width: '100%' }} />
+        <img alt='example' style={{ width: '100%' }} src={previewImage} />
       </Modal>
     </>
   )
 }
 
-export default UploadCoverImage
+export default UploadImage
