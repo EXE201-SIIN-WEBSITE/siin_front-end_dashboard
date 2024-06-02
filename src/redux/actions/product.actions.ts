@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { http } from '../../utils/http'
 import { ResponseData } from '../../types/response.type'
-import { Product } from '../../types/product.type'
+import { Product, SubImage } from '../../types/product.type'
 import toast from 'react-hot-toast'
 import { updateProductValuesType } from '../../schema/product.schema'
 
@@ -36,7 +36,21 @@ export const getProductId = createAsyncThunk(
     try {
       // Make the API call to fetch product details by ID
       const response = await http.get<ResponseData<Product>>(`/product/${id}`, { signal })
-      return response.data.data
+      const SubImage = await http.get<ResponseData<SubImage[]>>(`/product-sub-image/productId?productId=${id}`, {
+        signal
+      })
+      return {
+        id: response.data.data.id,
+        name: response.data.data.name,
+        coverImage: response.data.data.coverImage,
+        price: response.data.data.price,
+        status: response.data.data.status,
+        quantity: response.data.data.quantity,
+        categoryId: response.data.data.categoryId,
+        accessoryId: response.data.data.accessoryId,
+        materialId: response.data.data.materialId,
+        SubImages: SubImage.data.data || null
+      }
     } catch (error: any) {
       // Handle abort errors
       if (error.name === 'AbortError') {
@@ -163,6 +177,23 @@ export const createProduct = createAsyncThunk(
 export const deleteProductImage = createAsyncThunk('product/deleteProductImage', async (id: number, thunkAPI) => {
   try {
     const response = await http.delete<ResponseData<string>>(`/product/delete-image/${id}`, {
+      signal: thunkAPI.signal
+    })
+    return response.data.data
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
+    }
+    if (error.response?.data?.message) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+    return thunkAPI.rejectWithValue(error)
+  }
+})
+
+export const deleteProductSubImage = createAsyncThunk('product/deleteProductImage', async (id: number, thunkAPI) => {
+  try {
+    const response = await http.delete<ResponseData<string>>(`/product-sub-image/{id}?id=${id}`, {
       signal: thunkAPI.signal
     })
     return response.data.data
