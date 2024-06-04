@@ -10,14 +10,10 @@ type Props = {
 }
 
 const LayoutPage = ({ children }: Props) => {
-  // const location = useLocation()
-  // const { id } = useParams()
   const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken()
-
-  // const isNestedRoute = location.pathname.includes('/blog/new') || id
 
   return (
     <Layout>
@@ -47,7 +43,7 @@ const LayoutPage = ({ children }: Props) => {
             borderRadius: borderRadiusLG
           }}
         >
-          {children} {/* {isNestedRoute ? : children} */}
+          {children}
         </Content>
       </Layout>
     </Layout>

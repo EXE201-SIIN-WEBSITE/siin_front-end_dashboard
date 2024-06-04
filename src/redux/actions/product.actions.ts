@@ -52,10 +52,10 @@ export const getProductId = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   'product/deleteProduct',
-  async ({ id, product, signal }: { id: number; product: Product; signal: AbortSignal }, thunkAPI) => {
+  async ({ product, signal }: { product: Product; signal: AbortSignal }, thunkAPI) => {
     try {
       const response = await http.put<ResponseData<Product>>(
-        `/product/${id}`,
+        `/product/${product.id}`,
         {
           id: product.id,
           name: product.name,

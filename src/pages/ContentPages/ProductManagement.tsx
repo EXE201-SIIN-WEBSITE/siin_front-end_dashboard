@@ -9,6 +9,7 @@ import ProductModal from './Modal/ProductModal'
 import { getCategory } from '../../redux/actions/category.action'
 
 import { Link } from 'react-router-dom'
+import { removeEditProduct } from '../../redux/slices/product.slice.'
 
 const ProductManagement = () => {
   const dispatch = useAppDispatch()
@@ -30,14 +31,15 @@ const ProductManagement = () => {
   const handleOpenModalEdit = (id: number) => {
     const abortController = new AbortController()
     const signal = abortController.signal
+    dispatch(removeEditProduct())
     dispatch(getProductId({ id, signal }))
     setIsOpenModal(true)
   }
 
-  const handleDeleteProduct = (id: number, product: Product) => {
+  const handleDeleteProduct = (product: Product) => {
     const abortController = new AbortController()
     const signal = abortController.signal
-    dispatch(deleteProduct({ id, product, signal }))
+    dispatch(deleteProduct({ product, signal }))
   }
 
   const { loading, products } = useSelector((state: RootState) => state.product)
@@ -116,7 +118,7 @@ const ProductManagement = () => {
         return (
           <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
             <EditOutlined onClick={() => handleOpenModalEdit(record.id)} />
-            <Switch defaultChecked={record.status} onChange={() => handleDeleteProduct(record.id, record)} />
+            <Switch defaultChecked={record.status} onChange={() => handleDeleteProduct(record)} />
           </div>
         )
       }

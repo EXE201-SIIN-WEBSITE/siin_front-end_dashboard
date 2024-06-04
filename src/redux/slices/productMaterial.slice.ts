@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import initialProductMaterialState from '../types/productMaterialRedux.type'
-import { getProductMaterial } from '../actions/productmaterial.action'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
+import { getProductMaterialByProductId } from '../actions/productmaterial.action'
 
 const productMaterialSlice = createSlice({
   name: 'productMaterial',
@@ -9,7 +9,7 @@ const productMaterialSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getProductMaterial.fulfilled, (state, action) => {
+      .addCase(getProductMaterialByProductId.fulfilled, (state, action) => {
         state.productMaterial = action.payload
       })
       .addMatcher<PendingAction>(
