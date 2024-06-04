@@ -29,3 +29,24 @@ export const getProductMaterial = createAsyncThunk(
     }
   }
 )
+
+export const getProductMaterialByProductId = createAsyncThunk(
+  'productmaterial/getProductMaterialByProductId',
+  async ({ productId, signal }: { productId: number; signal: AbortSignal }, thunkAPI) => {
+    try {
+      const response = await http.get<ResponseData<ProductMaterial[]>>(
+        `/product-material/get-by-productId/${productId}`,
+        { signal }
+      )
+      return response.data.data
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
+      }
+      if (error.name === 'AxiosError') {
+        return thunkAPI.rejectWithValue(error.response?.data || error)
+      }
+      throw error
+    }
+  }
+)
