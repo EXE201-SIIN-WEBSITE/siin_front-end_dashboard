@@ -3,6 +3,7 @@ import { Product } from '../../types/product.type'
 interface ProductState {
   products: Product[]
   editProduct: Product | null
+  productSelected: Product | null
   loading: boolean
   error: null | any
   currentRequestId: undefined | string
@@ -11,6 +12,7 @@ interface ProductState {
 const initialProductState: ProductState = {
   products: [],
   editProduct: null,
+  productSelected: null,
   loading: true,
   error: null,
   currentRequestId: undefined

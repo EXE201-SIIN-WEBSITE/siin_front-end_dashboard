@@ -1,33 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
+import initialProductMaterialState from '../types/productMaterialRedux.type'
+import { getProductMaterial } from '../actions/productmaterial.action'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
-import { createAccessory, getAccessory, getAccessoryById, updateAccessory } from '../actions/accessory.action'
-import initialAccessoryState from '../types/accessoryRedux.type'
 
-const accessorySlice = createSlice({
-  name: 'accessory',
-  initialState: initialAccessoryState,
-  reducers: {
-    removeEditAccessory: (state) => {
-      state.editAccessory = null
-    }
-  },
+const productMaterialSlice = createSlice({
+  name: 'productMaterial',
+  initialState: initialProductMaterialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAccessory.fulfilled, (state, action) => {
-        state.accessories = action.payload
-      })
-      .addCase(getAccessoryById.fulfilled, (state, action) => {
-        state.editAccessory = action.payload
-      })
-      .addCase(updateAccessory.fulfilled, (state, action) => {
-        const updatedAccessory = action.payload
-        const index = state.accessories.findIndex((accessory) => accessory.id === updatedAccessory.id)
-        if (index !== -1) {
-          state.accessories[index] = updatedAccessory
-        }
-      })
-      .addCase(createAccessory.fulfilled, (state, action) => {
-        state.accessories.push(action.payload)
+      .addCase(getProductMaterial.fulfilled, (state, action) => {
+        state.productMaterial = action.payload
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),
@@ -61,5 +44,5 @@ const accessorySlice = createSlice({
       )
   }
 })
-export const { removeEditAccessory } = accessorySlice.actions
-export default accessorySlice.reducer
+
+export default productMaterialSlice.reducer

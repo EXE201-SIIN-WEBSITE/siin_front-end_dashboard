@@ -4,13 +4,15 @@ import productSlice from './slices/product.slice.'
 import categorySlice from './slices/category.slice'
 import accessorySlice from './slices/accessory.slice'
 import materialSlice from './slices/material.slice'
+import productMaterialSlice from './slices/productMaterial.slice'
 
 export const store = configureStore({
   reducer: {
     product: productSlice,
     category: categorySlice,
     accessory: accessorySlice,
-    materials: materialSlice
+    materials: materialSlice,
+    productMaterial: productMaterialSlice
   }
 })
 
