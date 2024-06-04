@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { http } from '../../utils/http'
 import { ResponseData } from '../../types/response.type'
-import { Product, SubImage } from '../../types/product.type'
+import { Product } from '../../types/product.type'
 import toast from 'react-hot-toast'
 import { updateProductValuesType } from '../../schema/product.schema'
 
@@ -12,7 +12,7 @@ interface signal {
 export const getProducts = createAsyncThunk('product/getProducts', async ({ signal }: signal, thunkAPI) => {
   try {
     const response = await http.get<ResponseData<Product[]>>(`/product/get-all/-1?pageSize=5&field=name`, {
-      signal // Pass the abort signal for request cancellation
+      signal
     })
     return response.data.data
   } catch (error: any) {
@@ -20,10 +20,9 @@ export const getProducts = createAsyncThunk('product/getProducts', async ({ sign
       toast.error('Request was cancelled')
       return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
     }
-
     if (error.name === 'AxiosError') {
       const errorMessage = error.response?.data?.message || 'Something went wrong'
-      toast.error(errorMessage) // Hiển thị toast khi có lỗi
+      toast.error(errorMessage)
       return thunkAPI.rejectWithValue(error.response?.data || error)
     }
     throw error
@@ -34,34 +33,16 @@ export const getProductId = createAsyncThunk(
   'product/getProductId',
   async ({ id, signal }: { id: number; signal: AbortSignal }, thunkAPI) => {
     try {
-      // Make the API call to fetch product details by ID
       const response = await http.get<ResponseData<Product>>(`/product/${id}`, { signal })
-      const SubImage = await http.get<ResponseData<SubImage[]>>(`/product-sub-image/productId?productId=${id}`, {
-        signal
-      })
-      return {
-        id: response.data.data.id,
-        name: response.data.data.name,
-        coverImage: response.data.data.coverImage,
-        price: response.data.data.price,
-        status: response.data.data.status,
-        quantity: response.data.data.quantity,
-        categoryId: response.data.data.categoryId,
-        accessoryId: response.data.data.accessoryId,
-        materialId: response.data.data.materialId,
-        SubImages: SubImage.data.data || null
-      }
+      return response.data.data
     } catch (error: any) {
-      // Handle abort errors
       if (error.name === 'AbortError') {
         toast.error('Request was cancelled')
         return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
       }
-
-      // Handle Axios errors
       if (error.name === 'AxiosError') {
         const errorMessage = error.response?.data?.message || 'Something went wrong'
-        toast.error(errorMessage) // Display toast on error
+        toast.error(errorMessage)
         return thunkAPI.rejectWithValue(error.response?.data || error)
       }
       throw error
@@ -73,7 +54,6 @@ export const deleteProduct = createAsyncThunk(
   'product/deleteProduct',
   async ({ id, product, signal }: { id: number; product: Product; signal: AbortSignal }, thunkAPI) => {
     try {
-      // Make the API call to update the product status
       const response = await http.put<ResponseData<Product>>(
         `/product/${id}`,
         {
@@ -81,27 +61,21 @@ export const deleteProduct = createAsyncThunk(
           name: product.name,
           coverImage: product.coverImage,
           price: product.price,
-          status: !product.status, // Revert the status
-          quantity: product.quantity,
-          categoryId: product.categoryId,
-          accessoryId: product.accessoryId,
-          materialId: product.materialId
+          status: !product.status,
+          categoryId: product.categoryId
         },
         { signal }
       )
       toast.success('Product status updated successfully')
       return response.data.data
     } catch (error: any) {
-      // Handle abort errors
       if (error.name === 'AbortError') {
         toast.error('Request was cancelled')
         return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
       }
-
-      // Handle Axios errors
       if (error.name === 'AxiosError') {
         const errorMessage = error.response?.data?.message || 'Something went wrong'
-        toast.error(errorMessage) // Display toast on error
+        toast.error(errorMessage)
         return thunkAPI.rejectWithValue(error.response?.data || error)
       }
       throw error
@@ -121,10 +95,7 @@ export const updateProduct = createAsyncThunk(
           coverImage: product.coverImage,
           price: product.price,
           status: product.status,
-          quantity: product.quantity,
-          categoryId: product.categoryId,
-          accessoryId: product.accessoryId,
-          materialId: product.materialId
+          categoryId: product.categoryId
         },
         { signal: thunkAPI.signal }
       )
@@ -150,13 +121,9 @@ export const createProduct = createAsyncThunk(
         `/product`,
         {
           name: product.name,
-          coverImage: product.coverImage,
           price: product.price,
           status: product.status,
-          quantity: product.quantity,
-          categoryId: product.categoryId,
-          accessoryId: product.accessoryId,
-          materialId: product.materialId
+          categoryId: product.categoryId
         },
         { signal: thunkAPI.signal }
       )

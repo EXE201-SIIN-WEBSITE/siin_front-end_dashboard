@@ -4,11 +4,7 @@ export interface Product {
   coverImage: string
   price: number
   status: boolean
-  quantity: number
   categoryId: number
-  accessoryId: number
-  materialId: number
-  SubImages?: SubImage[] | null
 }
 
 export interface SubImage {

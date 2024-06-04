@@ -6,6 +6,7 @@ import OrderManagement from '../pages/ContentPages/OrderManagement'
 import ProductManagement from '../pages/ContentPages/ProductManagement'
 import UserManagement from '../pages/ContentPages/UserManagement'
 import LayoutPage from '../pages/Layout'
+import ProductDetail from '../pages/ContentPages/ProductDetail'
 
 export default function ContentRouter() {
   return (
@@ -48,6 +49,14 @@ export default function ContentRouter() {
         element={
           <LayoutPage>
             <AccessoryManagement />
+          </LayoutPage>
+        }
+      />
+      <Route
+        path='/product/:id'
+        element={
+          <LayoutPage>
+            <ProductDetail />
           </LayoutPage>
         }
       />

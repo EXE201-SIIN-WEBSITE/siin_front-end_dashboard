@@ -53,20 +53,24 @@ export default function MenuNav() {
             key: 'accessory',
             icon: <ProductOutlined />,
             label: 'Accessory'
+          },
+          {
+            key: 'size',
+            icon: <ProductOutlined />,
+            label: 'Size'
+          },
+          {
+            key: 'color',
+            icon: <ProductOutlined />,
+            label: 'Color'
+          },
+          {
+            key: 'order',
+            icon: <ProductOutlined />,
+            label: 'Order'
           }
         ]}
       />
-      {/* <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          gap: '5%',
-          textAlign: 'center'
-        }}
-      >
-        <LogoutOutlined />
-        <span>SignOut</span>
-      </div> */}
     </div>
   )
 }
