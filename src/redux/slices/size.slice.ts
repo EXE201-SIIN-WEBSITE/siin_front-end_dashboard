@@ -1,29 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
-import initialProductMaterialState from '../types/productMaterialRedux.type'
+import initialSizeState from '../types/sizeRedux.type'
+import { getAllSize } from '../actions/size.action'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
-import {
-  getProductMaterialById,
-  getProductMaterialByProductId,
-  updateProductMaterial
-} from '../actions/productmaterial.action'
 
-const productMaterialSlice = createSlice({
-  name: 'productMaterial',
-  initialState: initialProductMaterialState,
-  reducers: {},
+const sizeSlice = createSlice({
+  name: 'size',
+  initialState: initialSizeState,
+  reducers: {
+    removeEditSize: (state) => {
+      state.editSize = null
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getProductMaterialByProductId.fulfilled, (state, action) => {
-        state.productMaterial = action.payload
-      })
-      .addCase(getProductMaterialById.fulfilled, (state, action) => {
-        state.editproductMaterial = action.payload
-      })
-      .addCase(updateProductMaterial.fulfilled, (state, action) => {
-        const index = state.productMaterial.findIndex((item) => item.id === action.payload.id)
-        if (index !== -1) {
-          state.productMaterial[index] = action.payload
-        }
+      .addCase(getAllSize.fulfilled, (state, action) => {
+        state.sizes = action.payload
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),
@@ -58,4 +49,6 @@ const productMaterialSlice = createSlice({
   }
 })
 
-export default productMaterialSlice.reducer
+export const { removeEditSize } = sizeSlice.actions
+
+export default sizeSlice.reducer

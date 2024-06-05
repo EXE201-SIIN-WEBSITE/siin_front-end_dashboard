@@ -22,6 +22,7 @@ export default function ProductModal({ isOpenModal, setOpenModal }: FormProductM
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false)
   const { editProduct } = useSelector((state: RootState) => state.product)
   const { categories } = useSelector((state: RootState) => state.category)
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string>('')
 
   const { control, handleSubmit, reset, setValue } = useForm<updateProductValuesType>({
     resolver: yupResolver(productSchema) as unknown as Resolver<updateProductValuesType>,
@@ -51,11 +52,14 @@ export default function ProductModal({ isOpenModal, setOpenModal }: FormProductM
           status: editProduct.status,
           categoryId: editProduct.categoryId
         })
+        const selectedCategory = categories.find((cat) => cat.id === editProduct.categoryId)
+        setSelectedCategoryName(selectedCategory?.name || '')
       } else {
         reset(defaultFormProductValue)
+        setSelectedCategoryName('')
       }
     }
-  }, [editProduct, isOpenModal])
+  }, [editProduct, isOpenModal, categories, reset])
 
   const handleCancel = () => {
     setOpenModal(false)
@@ -64,6 +68,11 @@ export default function ProductModal({ isOpenModal, setOpenModal }: FormProductM
 
   const handleCoverImageUpdate = (url: string) => {
     setValue('coverImage', url)
+  }
+
+  const handleCategoryChange = (_value: string, option: any) => {
+    setValue('categoryId', option.value)
+    setSelectedCategoryName(option.label)
   }
 
   const onSubmit: SubmitHandler<updateProductValuesType> = async (data) => {
@@ -81,7 +90,7 @@ export default function ProductModal({ isOpenModal, setOpenModal }: FormProductM
     } else {
       const resultAction = await dispatch(createProduct({ product: data }))
       if (createProduct.fulfilled.match(resultAction)) {
-        toast.success('Create Apartment Successfully!')
+        toast.success('Create Product Successfully!')
         reset(defaultFormProductValue)
         setConfirmLoading(false)
         setOpenModal(false)
@@ -130,11 +139,11 @@ export default function ProductModal({ isOpenModal, setOpenModal }: FormProductM
           <Controller
             control={control}
             name='categoryId'
-            render={({ field }) => (
+            render={() => (
               <AutoComplete
                 style={{ width: '100%' }}
-                value={field.value}
-                onChange={field.onChange}
+                value={selectedCategoryName}
+                onChange={handleCategoryChange}
                 options={categories.map((cat) => ({ value: cat.id.toString(), label: cat.name }))}
                 placeholder='input category'
               />
