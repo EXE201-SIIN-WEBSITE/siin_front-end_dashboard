@@ -8,6 +8,7 @@ import productMaterialSlice from './slices/productMaterial.slice'
 import sizeSlice from './slices/size.slice'
 import colorSlice from './slices/color.slice'
 import productMaterialSubImageSlice from './slices/productMaterialSubImage.slice'
+import orderDetailSlice from './slices/orderDetail.slice'
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +19,8 @@ export const store = configureStore({
     productMaterial: productMaterialSlice,
     size: sizeSlice,
     color: colorSlice,
-    productMaterialSubImage: productMaterialSubImageSlice
+    productMaterialSubImage: productMaterialSubImageSlice,
+    orderDetail: orderDetailSlice
   }
 })
 

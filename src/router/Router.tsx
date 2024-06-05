@@ -2,11 +2,11 @@ import { Route, Routes } from 'react-router-dom'
 import NotFoundPage from '../pages/ContentPages/404'
 import AccessoryManagement from '../pages/ContentPages/AccessoryManagement'
 import DashBoard from '../pages/ContentPages/Dashboard'
-import OrderManagement from '../pages/ContentPages/OrderManagement'
 import ProductManagement from '../pages/ContentPages/ProductManagement'
 import UserManagement from '../pages/ContentPages/UserManagement'
 import LayoutPage from '../pages/Layout'
 import ProductDetail from '../pages/ContentPages/ProductDetail'
+import OrderDetailManagement from '../pages/ContentPages/OrderDetailManagement'
 
 export default function ContentRouter() {
   return (
@@ -32,7 +32,7 @@ export default function ContentRouter() {
         path='/order'
         element={
           <LayoutPage>
-            <OrderManagement />
+            <OrderDetailManagement />
           </LayoutPage>
         }
       />

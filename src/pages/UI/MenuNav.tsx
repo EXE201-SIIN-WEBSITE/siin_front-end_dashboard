@@ -63,11 +63,6 @@ export default function MenuNav() {
             key: 'color',
             icon: <ProductOutlined />,
             label: 'Color'
-          },
-          {
-            key: 'order',
-            icon: <ProductOutlined />,
-            label: 'Order'
           }
         ]}
       />

@@ -115,3 +115,31 @@ export const deleteProductMaterialImage = createAsyncThunk(
     }
   }
 )
+interface CreateProductMaterialParams {
+  listColor: Array<number>
+  listSize: Array<number>
+  product: ProductMaterial
+}
+export const createProductMaterial = createAsyncThunk(
+  'productmaterial/createProductMaterial',
+  async ({ listColor, listSize, product }: CreateProductMaterialParams, thunkAPI) => {
+    try {
+      const params = new URLSearchParams()
+      listColor.forEach((color) => params.append('listColor', color.toString()))
+      listSize.forEach((size) => params.append('listSize', size.toString()))
+
+      const res = await http.post<ResponseData<ProductMaterial>>(`/product-material?${params.toString()}`, product, {
+        signal: thunkAPI.signal
+      })
+      return res.data.data
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
+      }
+      if (error.response?.data?.message) {
+        return thunkAPI.rejectWithValue(error.response.data)
+      }
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
