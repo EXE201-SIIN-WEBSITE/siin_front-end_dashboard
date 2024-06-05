@@ -5,6 +5,9 @@ import categorySlice from './slices/category.slice'
 import accessorySlice from './slices/accessory.slice'
 import materialSlice from './slices/material.slice'
 import productMaterialSlice from './slices/productMaterial.slice'
+import sizeSlice from './slices/size.slice'
+import colorSlice from './slices/color.slice'
+import productMaterialSubImageSlice from './slices/productMaterialSubImage.slice'
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +15,10 @@ export const store = configureStore({
     category: categorySlice,
     accessory: accessorySlice,
     materials: materialSlice,
-    productMaterial: productMaterialSlice
+    productMaterial: productMaterialSlice,
+    size: sizeSlice,
+    color: colorSlice,
+    productMaterialSubImage: productMaterialSubImageSlice
   }
 })
 

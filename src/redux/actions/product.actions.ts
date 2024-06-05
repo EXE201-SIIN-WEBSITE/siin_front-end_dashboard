@@ -157,20 +157,3 @@ export const deleteProductImage = createAsyncThunk('product/deleteProductImage',
     return thunkAPI.rejectWithValue(error)
   }
 })
-
-export const deleteProductSubImage = createAsyncThunk('product/deleteProductImage', async (id: number, thunkAPI) => {
-  try {
-    const response = await http.delete<ResponseData<string>>(`/product-sub-image/{id}?id=${id}`, {
-      signal: thunkAPI.signal
-    })
-    return response.data.data
-  } catch (error: any) {
-    if (error.name === 'AbortError') {
-      return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
-    }
-    if (error.response?.data?.message) {
-      return thunkAPI.rejectWithValue(error.response.data)
-    }
-    return thunkAPI.rejectWithValue(error)
-  }
-})
