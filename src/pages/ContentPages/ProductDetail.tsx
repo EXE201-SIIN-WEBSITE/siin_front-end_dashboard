@@ -1,4 +1,4 @@
-import { Image, Switch, Table, TableProps, Typography } from 'antd'
+import { Button, Image, Input, Switch, Table, TableProps, Typography } from 'antd'
 import { ProductMaterial } from '../../types/productMaterial.type'
 import { EditOutlined } from '@ant-design/icons'
 import { RootState, useAppDispatch } from '../../redux/store'
@@ -11,6 +11,7 @@ import { getAllSize } from '../../redux/actions/size.action'
 import { getAllColor } from '../../redux/actions/color.action'
 import ProductDetailModalUpdate from './Modal/ProductDetailModalUpdate'
 import UploadCoverImageProductMaterial from '../../utils/UploadCoverImageProductMaterial'
+import CreateProductMaterialModal from './Modal/CreateProductMaterial'
 
 export default function ProductDetail() {
   const dispatch = useAppDispatch()
@@ -20,10 +21,10 @@ export default function ProductDetail() {
   const propColor = useSelector((state: RootState) => state.color)
   const param = useParams<{ id: string }>()
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isOpenModalCreate, setIsOpenModalCreate] = useState<boolean>(false)
 
   useEffect(() => {
     const abortController = new AbortController()
-
     const signal = abortController.signal
     dispatch(getProductMaterialByProductId({ productId: Number(param.id), signal }))
     dispatch(getProductId({ id: Number(param.id), signal }))
@@ -33,6 +34,14 @@ export default function ProductDetail() {
       abortController.abort()
     }
   }, [dispatch, param.id])
+
+  useEffect(() => {
+    if (editProduct === null) {
+      return
+    } else {
+      document.title = `Product Detail - ${editProduct?.name}`
+    }
+  }, [editProduct])
 
   const handleOpenModalEdit = (id: number) => {
     const abortController = new AbortController()
@@ -132,15 +141,37 @@ export default function ProductDetail() {
 
   return (
     <>
-      <div className='product_cover_container' style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1%' }}>
+        {/* <Input.Search
+          style={{ width: '30%' }}
+          placeholder='Tìm kiếm'
+          onChange={(e) => {
+            setSearch(e.target.value)
+          }}
+        /> */}
         <Image src={editProduct?.coverImage} alt={editProduct?.name} style={{ width: '20%' }} />
-        <Typography.Title level={2}>{editProduct?.name}</Typography.Title>
+        <Typography.Title level={2}>Name: {editProduct?.name}</Typography.Title>
+        <Button
+          style={{ width: '10%' }}
+          type='primary'
+          block
+          onClick={() => {
+            setIsOpenModalCreate(true)
+          }}
+        >
+          Add New
+        </Button>
       </div>
       <Table
         columns={columns}
         rowKey='id'
         dataSource={productMaterial}
         loading={loading && propSize.loading && propColor.loading}
+      />
+      <CreateProductMaterialModal
+        isOpenModalCreate={isOpenModalCreate}
+        setOpenModal={setIsOpenModalCreate}
+        productId={Number(param.id)}
       />
       <ProductDetailModalUpdate isOpenModal={isOpenModal} setOpenModal={setIsOpenModal} />
     </>
