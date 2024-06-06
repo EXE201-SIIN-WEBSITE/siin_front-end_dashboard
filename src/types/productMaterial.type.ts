@@ -9,3 +9,12 @@ export interface ProductMaterial {
   price: number
   status: boolean
 }
+
+export interface ProductMaterialCreate {
+  id: number
+  productId: number
+  accessoryId: number | null
+  quantity: number
+  price: number
+  status: boolean
+}

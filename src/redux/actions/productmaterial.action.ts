@@ -3,6 +3,7 @@ import { http } from '../../utils/http'
 import { ProductMaterial } from '../../types/productMaterial.type'
 import { ResponseData } from '../../types/response.type'
 import { updateProductDetailValuesType } from '../../schema/productDetail.schema'
+import { updateProductMaterialCreateValue } from '../../schema/createProductMaterial.schema'
 
 interface signal {
   signal: AbortSignal
@@ -118,7 +119,7 @@ export const deleteProductMaterialImage = createAsyncThunk(
 interface CreateProductMaterialParams {
   listColor: Array<number>
   listSize: Array<number>
-  product: ProductMaterial
+  product: updateProductMaterialCreateValue
 }
 export const createProductMaterial = createAsyncThunk(
   'productmaterial/createProductMaterial',
@@ -128,7 +129,7 @@ export const createProductMaterial = createAsyncThunk(
       listColor.forEach((color) => params.append('listColor', color.toString()))
       listSize.forEach((size) => params.append('listSize', size.toString()))
 
-      const res = await http.post<ResponseData<ProductMaterial>>(`/product-material?${params.toString()}`, product, {
+      const res = await http.post<ResponseData<ProductMaterial[]>>(`/product-material?${params.toString()}`, product, {
         signal: thunkAPI.signal
       })
       return res.data.data
