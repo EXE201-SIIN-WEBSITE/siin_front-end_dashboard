@@ -7,6 +7,7 @@ import UserManagement from '../pages/ContentPages/UserManagement'
 import LayoutPage from '../pages/Layout'
 import ProductDetail from '../pages/ContentPages/ProductDetail'
 import OrderDetailManagement from '../pages/ContentPages/OrderDetailManagement'
+import BillToPrint from '../pages/BillToPrint'
 export default function ContentRouter() {
   return (
     <Routes>
@@ -59,7 +60,7 @@ export default function ContentRouter() {
           </LayoutPage>
         }
       />
-      <Route path='/billtoprint' element={<BillToPrint />} />
+      <Route path='/billtoprint/:orderid' element={<BillToPrint />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   )

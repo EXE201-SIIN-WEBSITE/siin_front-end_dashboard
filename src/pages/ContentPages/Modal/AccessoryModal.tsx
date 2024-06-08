@@ -20,7 +20,7 @@ export default function AccessoryModal({ isOpenModal, setOpenModal }: FormAccess
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false)
   const { editAccessory } = useSelector((state: RootState) => state.accessory)
 
-  const { control, handleSubmit, reset, setValue } = useForm<updateAccessoryValuesType>({
+  const { control, handleSubmit, reset } = useForm<updateAccessoryValuesType>({
     resolver: yupResolver(accessorySchema) as unknown as Resolver<updateAccessoryValuesType>,
     mode: 'onBlur',
     defaultValues: defaultFormAccessoryValue

@@ -1,10 +1,4 @@
-import { OrderDetail } from '../types/orderDetail.type'
-
-interface BillToPrintProps {
-  OrderDetail: OrderDetail
-}
-
-const BillToPrint = ({ OrderDetail }: BillToPrintProps) => {
+const BillToPrint = () => {
   return <div>hello</div>
 }
 
