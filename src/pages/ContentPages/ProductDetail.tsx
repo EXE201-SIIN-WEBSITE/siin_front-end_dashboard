@@ -1,4 +1,4 @@
-import { Button, Image, Input, Switch, Table, TableProps, Typography } from 'antd'
+import { Button, Image, Switch, Table, TableProps, Typography } from 'antd'
 import { ProductMaterial } from '../../types/productMaterial.type'
 import { EditOutlined } from '@ant-design/icons'
 import { RootState, useAppDispatch } from '../../redux/store'
