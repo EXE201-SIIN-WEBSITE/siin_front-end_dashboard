@@ -47,3 +47,23 @@ export const updateOrderDetail = createAsyncThunk(
     }
   }
 )
+
+export const getOrderDetailById = createAsyncThunk(
+  'order/getOrderDetailById',
+  async ({ id, signal }: { id: number; signal: AbortSignal }, thunkAPI) => {
+    try {
+      const res = await http.get<ResponseData<OrderDetail>>(`/order-detail/${id}`, {
+        signal
+      })
+      return res.data.data
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        return thunkAPI.rejectWithValue({ message: 'Request was cancelled' })
+      }
+      if (error.name === 'AxiosError') {
+        return thunkAPI.rejectWithValue(error.response?.data || error)
+      }
+      throw error
+    }
+  }
+)

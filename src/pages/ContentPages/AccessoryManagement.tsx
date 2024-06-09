@@ -1,5 +1,5 @@
 import { EditOutlined } from '@ant-design/icons'
-import { Button, Image, Input, Switch, Table, TableProps } from 'antd'
+import { Button, Input, Switch, Table, TableProps } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { deleteAccessory, getAccessory, getAccessoryById } from '../../redux/actions/accessory.action'
