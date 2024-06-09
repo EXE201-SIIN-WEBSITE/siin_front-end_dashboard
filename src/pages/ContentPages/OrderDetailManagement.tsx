@@ -7,8 +7,7 @@ import { OrderDetail } from '../../types/orderDetail.type'
 import { getOrderItemsByOrderDetailId } from '../../redux/actions/orderItem.action'
 import OrderItemModal from './Modal/OrderItemModal'
 import { Link } from 'react-router-dom'
-
-const { Option } = Select
+import { Option } from 'antd/es/mentions'
 
 const OrderDetailManagement = () => {
   const dispatch = useAppDispatch()

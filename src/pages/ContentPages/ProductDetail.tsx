@@ -12,6 +12,7 @@ import { getAllColor } from '../../redux/actions/color.action'
 import ProductDetailModalUpdate from './Modal/ProductDetailModalUpdate'
 import UploadCoverImageProductMaterial from '../../utils/UploadCoverImageProductMaterial'
 import CreateProductMaterialModal from './Modal/CreateProductMaterial'
+import { getAccessory } from '../../redux/actions/accessory.action'
 
 export default function ProductDetail() {
   const dispatch = useAppDispatch()
@@ -19,6 +20,8 @@ export default function ProductDetail() {
   const { editProduct } = useSelector((state: RootState) => state.product)
   const propSize = useSelector((state: RootState) => state.size)
   const propColor = useSelector((state: RootState) => state.color)
+  const propAccesory = useSelector((state: RootState) => state.accessory)
+
   const param = useParams<{ id: string }>()
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const [isOpenModalCreate, setIsOpenModalCreate] = useState<boolean>(false)
@@ -30,6 +33,7 @@ export default function ProductDetail() {
     dispatch(getProductId({ id: Number(param.id), signal }))
     dispatch(getAllSize({ signal }))
     dispatch(getAllColor({ signal }))
+    dispatch(getAccessory({ signal }))
     return () => {
       abortController.abort()
     }
@@ -63,6 +67,11 @@ export default function ProductDetail() {
   const getSizeNameById = (id: number) => {
     const size = propSize.sizes.find((size) => size.id === id)
     return size ? size.name : ''
+  }
+
+  const getAccessoryName = (id: number) => {
+    const accessory = propAccesory.accessories.find((accessory) => accessory.id === id)
+    return accessory ? accessory.name : ''
   }
 
   const columns: TableProps<ProductMaterial>['columns'] = [
@@ -99,6 +108,7 @@ export default function ProductDetail() {
       dataIndex: 'accessoryId',
       align: 'center',
       key: 'accessory',
+      render: (accessoryId: number) => getAccessoryName(accessoryId),
       width: '15%'
     },
     {
@@ -141,15 +151,8 @@ export default function ProductDetail() {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1%' }}>
-        {/* <Input.Search
-          style={{ width: '30%' }}
-          placeholder='Tìm kiếm'
-          onChange={(e) => {
-            setSearch(e.target.value)
-          }}
-        /> */}
-        <Image src={editProduct?.coverImage} alt={editProduct?.name} style={{ width: '20%' }} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1%' }}>
+        <Image src={editProduct?.coverImage} alt={editProduct?.name} height={300} />
         <Typography.Title level={2}>Name: {editProduct?.name}</Typography.Title>
         <Button
           style={{ width: '10%' }}
@@ -166,7 +169,7 @@ export default function ProductDetail() {
         columns={columns}
         rowKey='id'
         dataSource={productMaterial}
-        loading={loading && propSize.loading && propColor.loading}
+        loading={loading || propSize.loading || propColor.loading || propAccesory.loading}
       />
       <CreateProductMaterialModal
         isOpenModalCreate={isOpenModalCreate}

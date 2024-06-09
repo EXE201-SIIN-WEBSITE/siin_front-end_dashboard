@@ -42,7 +42,7 @@ const ProductManagement = () => {
     dispatch(deleteProduct({ product, signal }))
   }
 
-  const { loading, products } = useSelector((state: RootState) => state.product)
+  const { loading: productLoading, products } = useSelector((state: RootState) => state.product)
   const { categories } = useSelector((state: RootState) => state.category)
 
   const categoryFilters = categories.map((category) => ({
@@ -74,7 +74,7 @@ const ProductManagement = () => {
       sorter: (a, b) => a.name.localeCompare(b.name),
       render: (record) => (
         <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-          <Image src={record.coverImage} alt='cover' width={'100px'} />
+          <Image src={record.coverImage} alt='cover' height={'100px'} />
           <Link target='_blank' to={`${record.id}`}>
             {record.name}
           </Link>
@@ -146,7 +146,7 @@ const ProductManagement = () => {
           Add New
         </Button>
       </div>
-      <Table columns={columns} rowKey='id' dataSource={filteredProducts} loading={loading} />
+      <Table columns={columns} rowKey='id' dataSource={filteredProducts} loading={productLoading} />
       <ProductModal isOpenModal={isOpenModal} setOpenModal={setIsOpenModal} />
     </>
   )
