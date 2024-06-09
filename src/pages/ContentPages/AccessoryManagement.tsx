@@ -46,35 +46,35 @@ const AccessoryManagement = () => {
 
   const columns: TableProps<Accessory>['columns'] = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      align: 'center',
-      key: 'id',
-      sorter: (a, b) => a.id - b.id,
-      width: '10%',
-      render: (_text, _record, index) => index + 1 // Auto-incrementing ID
-    },
-    {
       title: 'Name',
       dataIndex: 'name',
       align: 'center',
       key: 'name',
       sorter: (a, b) => a.name.localeCompare(b.name),
-      width: '45%'
+      width: '35%'
     },
     {
       title: 'Image',
       key: 'name',
       align: 'center',
-      width: '15%',
+      width: '10%',
       render: (record: Accessory) => {
         return <UploadAccessoryImage product={record} />
       }
     },
     {
+      title: 'Price',
+      dataIndex: 'price',
+      align: 'center',
+      key: 'price',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      width: '30%',
+      render: (price: number) => `${price.toLocaleString()} VND`
+    },
+    {
       title: 'Action',
       key: 'id',
-      width: '30%',
+      width: '25%',
       align: 'center',
       render: (record: Accessory) => {
         return (

@@ -1,13 +1,16 @@
 import { Route, Routes } from 'react-router-dom'
+import BillToPrint from '../pages/BillToPrint'
 import NotFoundPage from '../pages/ContentPages/404'
 import AccessoryManagement from '../pages/ContentPages/AccessoryManagement'
+import ColorManagement from '../pages/ContentPages/ColorManagement'
 import DashBoard from '../pages/ContentPages/Dashboard'
+import OrderDetailManagement from '../pages/ContentPages/OrderDetailManagement'
+import ProductDetail from '../pages/ContentPages/ProductDetail'
 import ProductManagement from '../pages/ContentPages/ProductManagement'
+import SizeManagement from '../pages/ContentPages/SizeManagement'
 import UserManagement from '../pages/ContentPages/UserManagement'
 import LayoutPage from '../pages/Layout'
-import ProductDetail from '../pages/ContentPages/ProductDetail'
-import OrderDetailManagement from '../pages/ContentPages/OrderDetailManagement'
-import BillToPrint from '../pages/BillToPrint'
+
 export default function ContentRouter() {
   return (
     <Routes>
@@ -57,6 +60,22 @@ export default function ContentRouter() {
         element={
           <LayoutPage>
             <ProductDetail />
+          </LayoutPage>
+        }
+      />
+      <Route
+        path='/size'
+        element={
+          <LayoutPage>
+            <SizeManagement />
+          </LayoutPage>
+        }
+      />
+      <Route
+        path='/color'
+        element={
+          <LayoutPage>
+            <ColorManagement />
           </LayoutPage>
         }
       />

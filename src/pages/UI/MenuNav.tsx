@@ -20,7 +20,7 @@ export default function MenuNav() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <div style={{ justifyContent: 'center', textAlign: 'center', padding: '15% 0 15% 0' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <img src='/LOGO -05.png' style={{ height: '50%', width: '50%' }} alt='logo' />
       </div>
       <Menu

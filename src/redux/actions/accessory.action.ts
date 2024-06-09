@@ -83,7 +83,8 @@ export const createAccessory = createAsyncThunk(
         {
           name: accessory.name,
           image: null,
-          status: true
+          status: true,
+          price: accessory.price
         },
         {
           signal: thunkAPI.signal
@@ -112,6 +113,7 @@ export const updateAccessory = createAsyncThunk(
           id: accessory.id,
           name: accessory.name,
           image: accessory.image,
+          price: accessory.price,
           status: accessory.status
         },
         {

@@ -96,6 +96,12 @@ export default function AccessoryModal({ isOpenModal, setOpenModal }: FormAccess
             name='name'
             render={({ field }) => <Input value={field.value} onChange={field.onChange} placeholder='Input name' />}
           />
+          <Typography.Title level={5}>Price</Typography.Title>
+          <Controller
+            control={control}
+            name='price'
+            render={({ field }) => <Input value={field.value} onChange={field.onChange} placeholder='Input price' />}
+          />
         </Modal>
       </form>
     </>
