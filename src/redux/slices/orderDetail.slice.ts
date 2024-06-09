@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import initialOrderDetailState from '../types/orderDetailRedux.type'
-import { getOrderDetail, updateOrderDetail } from '../actions/orderDetail.action'
+import { getOrderDetail, getOrderDetailById, updateOrderDetail } from '../actions/orderDetail.action'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
 
 const OrderDetailSlice = createSlice({
@@ -16,6 +16,9 @@ const OrderDetailSlice = createSlice({
         state.orderDetail = state.orderDetail.map((orderDetail) =>
           orderDetail.id === action.payload.id ? action.payload : orderDetail
         )
+      })
+      .addCase(getOrderDetailById.fulfilled, (state, action) => {
+        state.OneOrderDetail = action.payload
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),

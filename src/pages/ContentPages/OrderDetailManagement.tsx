@@ -44,7 +44,7 @@ const OrderDetailManagement = () => {
 
   const columns = [
     {
-      title: 'Customer Name',
+      title: 'Name',
       dataIndex: 'nameCustomer',
       key: 'nameCustomer'
     },
@@ -66,9 +66,9 @@ const OrderDetailManagement = () => {
       key: 'email'
     },
     {
-      title: "Order's Item",
+      title: 'Item',
       key: 'id',
-      render: (record: OrderDetail) => <Button onClick={() => handleOnClickShowItemDetail(record.id)}>List Item</Button>
+      render: (record: OrderDetail) => <Button onClick={() => handleOnClickShowItemDetail(record.id)}>Item</Button>
     },
     {
       title: 'Note',
@@ -89,11 +89,11 @@ const OrderDetailManagement = () => {
           <Option style={{ color: 'orange' }} value='pending'>
             Pending
           </Option>
-          <Option style={{ color: 'blue' }} value='shipped'>
-            Shipped
+          <Option style={{ color: 'blue' }} value='shipping'>
+            Shipping
           </Option>
-          <Option style={{ color: 'green' }} value='delivered'>
-            Delivered
+          <Option style={{ color: 'green' }} value='complete'>
+            Complete
           </Option>
           <Option style={{ color: 'red' }} value='cancelled'>
             Cancelled
