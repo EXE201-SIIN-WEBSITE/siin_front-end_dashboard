@@ -1,23 +1,29 @@
 import { EditOutlined } from '@ant-design/icons'
 import { Table, TableProps } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getAllSize } from '../../redux/actions/size.action'
+import { getAllSize, getSizeById } from '../../redux/actions/size.action'
 import { RootState, useAppDispatch } from '../../redux/store'
 import { Size } from '../../types/size.type'
+import SizeModal from './Modal/SizeModal'
 
 const SizeManagement = () => {
   const dispatch = useAppDispatch()
   const { sizes, loading: sizesLoading } = useSelector((state: RootState) => state.size)
+  const [openModalEdit, setOpenModalEdit] = useState<boolean>(false)
 
   useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal
     dispatch(getAllSize({ signal }))
+    return () => {
+      abortController.abort()
+    }
   }, [dispatch])
 
   const handleOpenModalEdit = (id: number) => {
-    console.log(id)
+    setOpenModalEdit(true)
+    dispatch(getSizeById({ id, signal: new AbortController().signal }))
   }
 
   const columns: TableProps<Size>['columns'] = [
@@ -49,6 +55,7 @@ const SizeManagement = () => {
   return (
     <>
       <Table dataSource={sizes} columns={columns} rowKey='id' loading={sizesLoading} />
+      <SizeModal isOpenModal={openModalEdit} setOpenModal={setOpenModalEdit} />
     </>
   )
 }
