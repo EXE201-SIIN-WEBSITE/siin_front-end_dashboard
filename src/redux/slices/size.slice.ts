@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import initialSizeState from '../types/sizeRedux.type'
-import { getAllSize } from '../actions/size.action'
+import { createSize, getAllSize, getSizeById, updateSize } from '../actions/size.action'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
 
 const sizeSlice = createSlice({
@@ -15,6 +15,19 @@ const sizeSlice = createSlice({
     builder
       .addCase(getAllSize.fulfilled, (state, action) => {
         state.sizes = action.payload
+      })
+      .addCase(getSizeById.fulfilled, (state, action) => {
+        state.editSize = action.payload
+      })
+      .addCase(updateSize.fulfilled, (state, action) => {
+        const updated = action.payload
+        const index = state.sizes.findIndex((size) => size.id === size.id)
+        if (index !== -1) {
+          state.sizes[index] = updated
+        }
+      })
+      .addCase(createSize.fulfilled, (state, action) => {
+        state.sizes.push(action.payload)
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),
