@@ -84,7 +84,7 @@ const UploadImage = ({ id, productMaterialSubImage }: UploadImageProps) => {
       <ImgCrop rotationSlider aspectSlider cropShape='rect' modalWidth={600}>
         <Upload
           name='file'
-          action={`http://172.171.207.227:8080/api/v1/product-sub-image/${id}`}
+          action={`https://exe201-backend.click/api/v1/product-sub-image/${id}`}
           listType='picture-card'
           beforeUpload={beforeUpload}
           fileList={fileList}
