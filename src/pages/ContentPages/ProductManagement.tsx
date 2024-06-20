@@ -95,6 +95,7 @@ const ProductManagement = () => {
       dataIndex: 'categoryId',
       key: 'categoryId',
       align: 'center',
+      width: '25%',
       sorter: (a, b) => {
         const categoryA = categories.find((cat) => cat.id === a.categoryId)?.name || ''
         const categoryB = categories.find((cat) => cat.id === b.categoryId)?.name || ''
@@ -102,13 +103,11 @@ const ProductManagement = () => {
       },
       filters: categoryFilters,
       onFilter: (value, record) => record.categoryId === value,
-      width: '25%',
       render: (categoryId: number) => {
         const category = categories.find((cat) => cat.id === categoryId)
         return category ? category.name : 'Unknown'
       }
     },
-
     {
       title: 'Action',
       key: 'id',
