@@ -82,7 +82,7 @@ export const createSize = createAsyncThunk(
   async ({ size }: { size: updateSizeValuesType }, thunkAPI) => {
     try {
       const response = await http.post<ResponseData<Size>>(
-        '/accessory',
+        '/size',
         {
           name: size.name,
           price: size.price

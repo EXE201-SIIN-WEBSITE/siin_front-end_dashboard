@@ -33,7 +33,7 @@ const OrderItemModal = ({ open, setOpen, ListOrderItem, loading }: OrderItemModa
 
       dispatch(getProducts({ signal }))
       dispatch(getAccessory({ signal }))
-      dispatch(getAllColor({ signal }))
+      dispatch(getAllColor(signal))
       dispatch(getAllSize({ signal }))
 
       return () => {

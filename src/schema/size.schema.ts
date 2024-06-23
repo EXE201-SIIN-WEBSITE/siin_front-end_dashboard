@@ -8,7 +8,7 @@ export type updateSizeValuesType = {
 
 export const sizeSchema = yup.object().shape({
   name: yup.string().required('Please input name!'),
-  price: yup.number().required('Please input price!')
+  price: yup.number().required('Please input price!').min(0, 'Price must be greater than 0!').typeError('Number only')
 })
 
 export const defaultFormSizeValue: updateSizeValuesType = {

@@ -1,23 +1,27 @@
 import { EditOutlined } from '@ant-design/icons'
-import { Table, TableProps } from 'antd'
-import { useEffect } from 'react'
+import { Button, Input, Table, TableProps } from 'antd'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getAllColor } from '../../redux/actions/color.action'
+import { getAllColor, getColorById } from '../../redux/actions/color.action'
 import { RootState, useAppDispatch } from '../../redux/store'
 import { Color } from '../../types/color.type'
+import ColorModal from './Modal/ColorModal'
 
 const ColorManagement = () => {
   const dispatch = useAppDispatch()
   const { colors, loading: colorsLoading } = useSelector((state: RootState) => state.color)
+  const [openModalEdit, setOpenModalEdit] = useState<boolean>(false)
+  const [_search, setSearch] = useState<string>('')
 
   useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal
-    dispatch(getAllColor({ signal }))
+    dispatch(getAllColor(signal))
   }, [dispatch])
 
   const handleOpenModalEdit = (id: number) => {
-    console.log(id)
+    setOpenModalEdit(true)
+    dispatch(getColorById({ id, signal: new AbortController().signal }))
   }
 
   const columns: TableProps<Color>['columns'] = [
@@ -48,6 +52,26 @@ const ColorManagement = () => {
 
   return (
     <>
+      <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1%' }}>
+        <Input.Search
+          style={{ width: '30%' }}
+          placeholder='Tìm kiếm'
+          onChange={(e) => {
+            setSearch(e.target.value)
+          }}
+        />
+        <Button
+          style={{ width: '10%' }}
+          type='primary'
+          block
+          onClick={() => {
+            setOpenModalEdit(true)
+          }}
+        >
+          Add New
+        </Button>
+      </div>
+      <ColorModal isOpenModal={openModalEdit} setOpenModal={setOpenModalEdit} />
       <Table dataSource={colors} columns={columns} rowKey='id' loading={colorsLoading} />
     </>
   )

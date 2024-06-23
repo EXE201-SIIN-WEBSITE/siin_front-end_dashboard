@@ -41,7 +41,7 @@ export default function CreateProductMaterialModal({
     if (isOpenModalCreate) {
       const abortController = new AbortController()
       const signal = abortController.signal
-      dispatch(getAllColor({ signal }))
+      dispatch(getAllColor(signal))
       dispatch(getAllSize({ signal }))
       return () => abortController.abort()
     }

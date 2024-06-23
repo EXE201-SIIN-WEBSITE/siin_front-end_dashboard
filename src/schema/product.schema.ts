@@ -11,7 +11,7 @@ export type updateProductValuesType = {
 
 export const productSchema = yup.object().shape({
   name: yup.string().required('Please input name!'),
-  price: yup.number().required('Please input price!').typeError(' must be a number'),
+  price: yup.number().required('Please input price!').typeError(' must be a number').typeError('Number only'),
   status: yup.boolean().required('Please choose status!'),
   categoryId: yup.number().required('Please choose categoryId!')
 })

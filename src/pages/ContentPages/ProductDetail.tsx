@@ -32,7 +32,7 @@ export default function ProductDetail() {
     dispatch(getProductMaterialByProductId({ productId: Number(param.id), signal }))
     dispatch(getProductId({ id: Number(param.id), signal }))
     dispatch(getAllSize({ signal }))
-    dispatch(getAllColor({ signal }))
+    dispatch(getAllColor(signal))
     dispatch(getAccessory({ signal }))
     return () => {
       abortController.abort()

@@ -10,7 +10,7 @@ export type updateAccessoryValuesType = {
 
 export const accessorySchema = yup.object().shape({
   name: yup.string().required('Please input name!'),
-  price: yup.number().required('Please input price!')
+  price: yup.number().required('Please input price!').typeError('Number only')
 })
 
 export const defaultFormAccessoryValue: updateAccessoryValuesType = {

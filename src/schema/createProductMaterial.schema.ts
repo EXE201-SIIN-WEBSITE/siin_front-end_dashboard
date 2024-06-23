@@ -14,8 +14,8 @@ export type updateProductMaterialCreateValue = {
 export const ProductMaterialCreateSchema = yup.object().shape({
   productId: yup.number().required(),
   accessoryId: yup.number().nullable(),
-  quantity: yup.number().required('pls input quantity').min(0, 'quantity greate than 0'),
-  price: yup.number().required().min(0, 'price greate than 0'),
+  quantity: yup.number().required('pls input quantity').min(0, 'quantity greate than 0').typeError('Number only'),
+  price: yup.number().required().min(0, 'price greate than 0').typeError('Number only'),
   status: yup.boolean().required()
 })
 

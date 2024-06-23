@@ -4,21 +4,21 @@ import { useEffect, useState } from 'react'
 import { Controller, FieldErrors, Resolver, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
-import { createSize, updateSize } from '../../../redux/actions/size.action'
-import { removeEditSize } from '../../../redux/slices/size.slice'
 import { RootState, useAppDispatch } from '../../../redux/store'
 import { defaultFormSizeValue, sizeSchema, updateSizeValuesType } from '../../../schema/size.schema'
+import { removeColorEidt } from '../../../redux/slices/color.slice'
+import { createColor, updateColor } from '../../../redux/actions/color.action'
 
 export type FormSizeModalProps = {
   isOpenModal: boolean
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function SizeModal({ isOpenModal, setOpenModal }: FormSizeModalProps) {
+export default function ColorModal({ isOpenModal, setOpenModal }: FormSizeModalProps) {
   const dispatch = useAppDispatch()
 
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false)
-  const { editSize } = useSelector((state: RootState) => state.size)
+  const { editColor } = useSelector((state: RootState) => state.color)
 
   const { control, handleSubmit, reset } = useForm<updateSizeValuesType>({
     resolver: yupResolver(sizeSchema) as unknown as Resolver<updateSizeValuesType>,
@@ -28,39 +28,39 @@ export default function SizeModal({ isOpenModal, setOpenModal }: FormSizeModalPr
 
   useEffect(() => {
     if (isOpenModal) {
-      if (editSize) {
+      if (editColor) {
         reset({
-          id: editSize.id,
-          name: editSize.name,
-          price: editSize.price
+          id: editColor.id,
+          name: editColor.name,
+          price: editColor.price
         })
       } else {
         reset(defaultFormSizeValue)
       }
     }
-  }, [editSize, isOpenModal])
+  }, [editColor, isOpenModal])
 
   const handleCancel = () => {
     setOpenModal(false)
-    dispatch(removeEditSize())
+    dispatch(removeColorEidt())
   }
 
   const onSubmit: SubmitHandler<updateSizeValuesType> = async (data) => {
     setConfirmLoading(true)
-    if (editSize) {
+    if (editColor) {
       if (data.name) {
-        const resultAction: any = await dispatch(updateSize({ data: data, signal: new AbortController().signal }))
-        if (updateSize.fulfilled.match(resultAction)) {
-          toast.success('Update Size Successfully!')
+        const resultAction: any = await dispatch(updateColor({ data: data, signal: new AbortController().signal }))
+        if (updateColor.fulfilled.match(resultAction)) {
+          toast.success('Update Color Successfully!')
           reset(defaultFormSizeValue)
           setConfirmLoading(false)
           setOpenModal(false)
         }
       }
     } else {
-      const resultAction = await dispatch(createSize({ size: data }))
-      if (createSize.fulfilled.match(resultAction)) {
-        toast.success('Create Size Successfully!')
+      const resultAction = await dispatch(createColor({ color: data }))
+      if (createColor.fulfilled.match(resultAction)) {
+        toast.success('Create Color Successfully!')
         reset(defaultFormSizeValue)
         setConfirmLoading(false)
         setOpenModal(false)
@@ -83,7 +83,7 @@ export default function SizeModal({ isOpenModal, setOpenModal }: FormSizeModalPr
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Modal
-          title={editSize ? 'Edit Size' : 'Add New Size'}
+          title={editColor ? 'Edit Color' : 'Add New Color'}
           open={isOpenModal}
           onOk={handleSubmit(onSubmit, onError)}
           confirmLoading={confirmLoading}

@@ -29,7 +29,7 @@ const BillToPrint = () => {
     dispatch(getOrderDetailById({ id: Number(orderid), signal }))
     dispatch(getProducts({ signal }))
     dispatch(getAccessory({ signal }))
-    dispatch(getAllColor({ signal }))
+    dispatch(getAllColor(signal))
     dispatch(getAllSize({ signal }))
     dispatch(getOrderItemsByOrderDetailId({ id: Number(orderid), signal }))
     return () => {

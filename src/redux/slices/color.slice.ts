@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { FulfilledAction, PendingAction, RejectedAction } from '../../types/redux.types'
 import initialColorState from '../types/colorRedux,type'
-import { getAllColor } from '../actions/color.action'
+import { createColor, getAllColor, getColorById, updateColor } from '../actions/color.action'
 
 const colorSlice = createSlice({
   name: 'size',
   initialState: initialColorState,
   reducers: {
-    removeEditSize: (state) => {
+    removeColorEidt: (state) => {
       state.editColor = null
     }
   },
@@ -15,6 +15,19 @@ const colorSlice = createSlice({
     builder
       .addCase(getAllColor.fulfilled, (state, action) => {
         state.colors = action.payload
+      })
+      .addCase(getColorById.fulfilled, (state, action) => {
+        state.editColor = action.payload
+      })
+      .addCase(updateColor.fulfilled, (state, action) => {
+        const updated = action.payload
+        const index = state.colors.findIndex((size) => size.id === size.id)
+        if (index !== -1) {
+          state.colors[index] = updated
+        }
+      })
+      .addCase(createColor.fulfilled, (state, action) => {
+        state.colors.push(action.payload)
       })
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),
@@ -49,6 +62,6 @@ const colorSlice = createSlice({
   }
 })
 
-export const { removeEditSize } = colorSlice.actions
+export const { removeColorEidt } = colorSlice.actions
 
 export default colorSlice.reducer
