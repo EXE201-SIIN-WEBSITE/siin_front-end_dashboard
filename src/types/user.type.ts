@@ -1,8 +1,9 @@
 export interface User {
   id: number
-  province: string
-  district: string
-  ward: string
-  address: string
-  userId: number
+  email: string
+  fullName: string
+  password: string
+  phone: string
+  avatar: string
+  dob: string
 }
