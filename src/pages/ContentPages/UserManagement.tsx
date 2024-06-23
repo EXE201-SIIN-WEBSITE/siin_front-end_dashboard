@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux'
 
 export default function UserManagement() {
   const dispatch = useAppDispatch()
-  const [search, setSearch] = useState<string>('')
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [_search, setSearch] = useState<string>('')
+  const [_isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const { loading: userloading, user } = useSelector((state: RootState) => state.user)
 
   useEffect(() => {
