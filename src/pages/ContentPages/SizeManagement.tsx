@@ -11,7 +11,7 @@ const SizeManagement = () => {
   const dispatch = useAppDispatch()
   const { sizes, loading: sizesLoading } = useSelector((state: RootState) => state.size)
   const [openModalEdit, setOpenModalEdit] = useState<boolean>(false)
-  const [_search, setSearch] = useState<string>('')
+  const [, setSearch] = useState<string>('')
 
   useEffect(() => {
     const abortController = new AbortController()

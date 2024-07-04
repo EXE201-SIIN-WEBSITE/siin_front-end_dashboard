@@ -11,7 +11,7 @@ const ColorManagement = () => {
   const dispatch = useAppDispatch()
   const { colors, loading: colorsLoading } = useSelector((state: RootState) => state.color)
   const [openModalEdit, setOpenModalEdit] = useState<boolean>(false)
-  const [_search, setSearch] = useState<string>('')
+  const [, setSearch] = useState<string>('')
 
   useEffect(() => {
     const abortController = new AbortController()

@@ -56,6 +56,7 @@ const OrderDetailManagement = () => {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render: (_: any, record: OrderDetail) =>
         `${record.address}, ${record.ward}, ${record.district}, ${record.province}`
     },
@@ -83,6 +84,7 @@ const OrderDetailManagement = () => {
       title: 'Order Status',
       dataIndex: 'orderStatus',
       key: 'orderStatus',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render: (_: any, record: OrderDetail) => (
         <Select value={record.orderStatus} onChange={(value) => handleStatusChange(record, value)}>
           <Option style={{ color: 'orange' }} value='pending'>

@@ -11,9 +11,12 @@ interface signal {
 
 export const getProducts = createAsyncThunk('product/getProducts', async ({ signal }: signal, thunkAPI) => {
   try {
-    const response = await http.get<ResponseData<Product[]>>(`/product/get-all/-1?pageSize=5&field=name`, {
-      signal
-    })
+    const response = await http.get<ResponseData<Product[]>>(
+      `/product/get-all-excluding-customize/{currentPage}?currentPage=-1&pageSize=5&field=name&categoryId=0`,
+      {
+        signal
+      }
+    )
     return response.data.data
   } catch (error: any) {
     if (error.name === 'AbortError') {
