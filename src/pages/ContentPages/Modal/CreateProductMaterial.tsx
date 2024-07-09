@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Modal, Checkbox, Typography, Input } from 'antd'
 import { useEffect, useState } from 'react'
@@ -91,7 +92,7 @@ export default function CreateProductMaterialModal({
   const onError: SubmitErrorHandler<updateProductMaterialCreateValue> = (
     errors: FieldErrors<updateProductMaterialCreateValue>
   ) => {
-    Object.entries(errors).forEach(([_field, error]) => {
+    Object.entries(errors).forEach(([, error]) => {
       const errorMessage = error?.message
       errorMessage && toast.error(errorMessage)
     })

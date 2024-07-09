@@ -140,7 +140,7 @@ export default function ProductDetail() {
       align: 'center',
       render: (record: ProductMaterial) => {
         return (
-          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly', gap: '10px' }}>
             <EditOutlined onClick={() => handleOpenModalEdit(record.id)} />
             <Switch defaultChecked={record.status} onChange={() => handleDeleteProduct(record.id, record)} />
           </div>

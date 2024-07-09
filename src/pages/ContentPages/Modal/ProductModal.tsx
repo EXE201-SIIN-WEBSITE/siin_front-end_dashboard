@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AutoComplete, Input, Modal, Typography } from 'antd'
 import { useEffect, useState } from 'react'
@@ -103,7 +104,7 @@ export default function ProductModal({ isOpenModal, setOpenModal }: FormProductM
   }
 
   const onError: SubmitErrorHandler<updateProductValuesType> = (errors: FieldErrors<updateProductValuesType>) => {
-    Object.entries(errors).forEach(([_field, error]) => {
+    Object.entries(errors).forEach(([, error]) => {
       const errorMessage = error?.message
       errorMessage && toast.error(errorMessage)
     })

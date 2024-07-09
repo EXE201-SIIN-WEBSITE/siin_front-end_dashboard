@@ -4,6 +4,7 @@ interface UserState {
   user: User[]
   editUser: User | null
   loading: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: null | any
   currentRequestId: undefined | string
 }

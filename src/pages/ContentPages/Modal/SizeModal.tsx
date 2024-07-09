@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input, Modal, Typography } from 'antd'
 import { useEffect, useState } from 'react'
@@ -38,6 +39,7 @@ export default function SizeModal({ isOpenModal, setOpenModal }: FormSizeModalPr
         reset(defaultFormSizeValue)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editSize, isOpenModal])
 
   const handleCancel = () => {
@@ -73,7 +75,7 @@ export default function SizeModal({ isOpenModal, setOpenModal }: FormSizeModalPr
   }
 
   const onError: SubmitErrorHandler<updateSizeValuesType> = (errors: FieldErrors<updateSizeValuesType>) => {
-    Object.entries(errors).forEach(([_field, error]) => {
+    Object.entries(errors).forEach(([, error]) => {
       const errorMessage = error?.message
       errorMessage && toast.error(errorMessage)
     })

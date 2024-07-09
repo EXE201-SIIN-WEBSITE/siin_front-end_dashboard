@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Material } from '../../types/material.type'
 
 interface MaterialState {
