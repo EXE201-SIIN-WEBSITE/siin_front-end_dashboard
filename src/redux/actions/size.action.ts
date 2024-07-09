@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { http } from '../../utils/http'
 import { ResponseData } from '../../types/response.type'

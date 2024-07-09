@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Table, Select, Button } from 'antd'
+import { Table, Select, Button, Input } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '../../redux/store'
 import { getOrderDetail, updateOrderDetail } from '../../redux/actions/orderDetail.action'
@@ -15,6 +15,8 @@ const OrderDetailManagement = () => {
   const { orderItem, loading: orderItemLoading } = useSelector((state: RootState) => state.orderItem)
   const [open, setOpen] = useState<boolean>(false)
   const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null)
+  const [filterStatus, setFilterStatus] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState<string>('')
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -40,6 +42,23 @@ const OrderDetailManagement = () => {
       dispatch(getOrderItemsByOrderDetailId({ id, signal }))
     }
   }
+
+  const handleFilterChange = (value: string) => {
+    setFilterStatus(value)
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value)
+  }
+
+  const handleClearFilters = () => {
+    setFilterStatus(null)
+    setSearchQuery('')
+  }
+
+  const filteredOrderDetail = orderDetail
+    .filter((detail) => (filterStatus ? detail.orderStatus === filterStatus : true))
+    .filter((detail) => detail.phone.includes(searchQuery))
 
   const columns = [
     {
@@ -121,7 +140,27 @@ const OrderDetailManagement = () => {
 
   return (
     <>
-      <Table dataSource={orderDetail} columns={columns} rowKey='id' loading={orderDetailLoading} />
+      <div style={{ marginBottom: 16 }}>
+        <Select
+          placeholder='Filter by status'
+          onChange={handleFilterChange}
+          value={filterStatus}
+          style={{ marginRight: 8, width: 200 }}
+        >
+          <Option value='pending'>Pending</Option>
+          <Option value='shipping'>Shipping</Option>
+          <Option value='complete'>Complete</Option>
+          <Option value='cancelled'>Cancelled</Option>
+        </Select>
+        <Input
+          placeholder='Search by phone number'
+          value={searchQuery}
+          onChange={handleSearchChange}
+          style={{ width: 200, marginRight: 8 }}
+        />
+        <Button onClick={handleClearFilters}>Clear</Button>
+      </div>
+      <Table dataSource={filteredOrderDetail} columns={columns} rowKey='id' loading={orderDetailLoading} />
       <OrderItemModal open={open} setOpen={setOpen} ListOrderItem={orderItem} loading={orderItemLoading} />
     </>
   )

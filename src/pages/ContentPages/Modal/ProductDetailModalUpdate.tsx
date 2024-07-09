@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input, Modal, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import { Controller, FieldErrors, Resolver, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
-import { updateProduct } from '../../../redux/actions/product.actions'
 import { getProductMaterialSubImage } from '../../../redux/actions/productMaterialSubImage.action'
 import { updateProductMaterial } from '../../../redux/actions/productmaterial.action'
 import { RootState, useAppDispatch } from '../../../redux/store'
@@ -45,6 +45,7 @@ export default function ProductDetailModalUpdate({ isOpenModal, setOpenModal }: 
     return () => {
       abortController.abort()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpenModal, editproductMaterial])
 
   useEffect(() => {
@@ -64,6 +65,7 @@ export default function ProductDetailModalUpdate({ isOpenModal, setOpenModal }: 
         reset(defaultFormProductDetailValue)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editproductMaterial, isOpenModal])
 
   const handleCancel = () => {
@@ -85,7 +87,7 @@ export default function ProductDetailModalUpdate({ isOpenModal, setOpenModal }: 
     if (editproductMaterial) {
       if (productMaterial.id) {
         const resultAction: any = await dispatch(updateProductMaterial({ productMaterial, signal }))
-        if (updateProduct.fulfilled.match(resultAction)) {
+        if (updateProductMaterial.fulfilled.match(resultAction)) {
           toast.success('Update Product Successfully!')
           reset(defaultFormProductDetailValue)
           setConfirmLoading(false)
@@ -103,7 +105,7 @@ export default function ProductDetailModalUpdate({ isOpenModal, setOpenModal }: 
   const onError: SubmitErrorHandler<updateProductDetailValuesType> = (
     errors: FieldErrors<updateProductDetailValuesType>
   ) => {
-    Object.entries(errors).forEach(([_field, error]) => {
+    Object.entries(errors).forEach(([, error]) => {
       const errorMessage = error?.message
       errorMessage && toast.error(errorMessage)
     })

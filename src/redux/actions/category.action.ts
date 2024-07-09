@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import toast from 'react-hot-toast'
 import { Category } from '../../types/category.type'

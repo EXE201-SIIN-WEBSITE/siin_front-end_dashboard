@@ -23,6 +23,10 @@ export const defaultFormProductDetailValue: updateProductDetailValuesType = {
 }
 
 export const productDetailSchema = yup.object().shape({
-  quantity: yup.number().required('Please input quantity!').min(1, 'Quantity must be greater than 0!'),
+  quantity: yup
+    .number()
+    .required('Please input quantity!')
+    .min(1, 'Quantity must be greater than 0!')
+    .typeError('Number only'),
   price: yup.number().required('Please input price!').min(1, 'Price must be greater than 0!').typeError('Number only')
 })

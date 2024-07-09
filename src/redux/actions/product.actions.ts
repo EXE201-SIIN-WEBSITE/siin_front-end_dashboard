@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { http } from '../../utils/http'
 import { ResponseData } from '../../types/response.type'
@@ -12,7 +13,7 @@ interface signal {
 export const getProducts = createAsyncThunk('product/getProducts', async ({ signal }: signal, thunkAPI) => {
   try {
     const response = await http.get<ResponseData<Product[]>>(
-      `/product/get-all-excluding-customize/{currentPage}?currentPage=-1&pageSize=5&field=name&categoryId=0`,
+      `/product/get-all/{currentPage}?currentPage=-1&pageSize=5&field=name&categoryId=0`,
       {
         signal
       }

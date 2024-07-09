@@ -5,6 +5,7 @@ interface ProductState {
   editProduct: Product | null
   productSelected: Product | null
   loading: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: null | any
   currentRequestId: undefined | string
 }

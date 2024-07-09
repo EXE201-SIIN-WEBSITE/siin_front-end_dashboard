@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProductMaterial } from '../../types/productMaterial.type'
 
 interface ProductMaterialState {

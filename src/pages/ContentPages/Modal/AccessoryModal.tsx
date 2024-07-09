@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input, Modal, Typography } from 'antd'
 import { useEffect, useState } from 'react'
@@ -39,6 +40,7 @@ export default function AccessoryModal({ isOpenModal, setOpenModal }: FormAccess
         reset(defaultFormAccessoryValue)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editAccessory, isOpenModal])
 
   const handleCancel = () => {
@@ -74,7 +76,7 @@ export default function AccessoryModal({ isOpenModal, setOpenModal }: FormAccess
   }
 
   const onError: SubmitErrorHandler<updateAccessoryValuesType> = (errors: FieldErrors<updateAccessoryValuesType>) => {
-    Object.entries(errors).forEach(([_field, error]) => {
+    Object.entries(errors).forEach(([, error]) => {
       const errorMessage = error?.message
       errorMessage && toast.error(errorMessage)
     })

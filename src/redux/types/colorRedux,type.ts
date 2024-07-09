@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Color } from '../../types/color.type'
 
 interface ColorState {
