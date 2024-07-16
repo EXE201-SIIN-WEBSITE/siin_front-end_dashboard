@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
 import { Table, Select, Button, Input } from 'antd'
 import { useSelector } from 'react-redux'
@@ -17,6 +18,7 @@ const OrderDetailManagement = () => {
   const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null)
   const [filterStatus, setFilterStatus] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const [orderID, setOrderID] = useState<string>('')
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -47,18 +49,24 @@ const OrderDetailManagement = () => {
     setFilterStatus(value)
   }
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value)
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    if (field === 'phone') {
+      setSearchQuery(e.target.value)
+    } else if (field === 'orderID') {
+      setOrderID(e.target.value)
+    }
   }
 
   const handleClearFilters = () => {
     setFilterStatus(null)
     setSearchQuery('')
+    setOrderID('')
   }
 
   const filteredOrderDetail = orderDetail
     .filter((detail) => (filterStatus ? detail.orderStatus === filterStatus : true))
     .filter((detail) => detail.phone.includes(searchQuery))
+    .filter((detail) => (orderID ? detail.id.toString().includes(orderID) : true))
 
   const columns = [
     {
@@ -80,7 +88,6 @@ const OrderDetailManagement = () => {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render: (_: any, record: OrderDetail) =>
         `${record.address}, ${record.ward}, ${record.district}, ${record.province}`
     },
@@ -108,7 +115,6 @@ const OrderDetailManagement = () => {
       title: 'Order Status',
       dataIndex: 'orderStatus',
       key: 'orderStatus',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render: (_: any, record: OrderDetail) => (
         <Select value={record.orderStatus} onChange={(value) => handleStatusChange(record, value)}>
           <Option style={{ color: 'orange' }} value='pending'>
@@ -160,7 +166,13 @@ const OrderDetailManagement = () => {
         <Input
           placeholder='Search by phone number'
           value={searchQuery}
-          onChange={handleSearchChange}
+          onChange={(e) => handleSearchChange(e, 'phone')}
+          style={{ width: 200, marginRight: 8 }}
+        />
+        <Input
+          placeholder='Search by Order ID'
+          value={orderID}
+          onChange={(e) => handleSearchChange(e, 'orderID')}
           style={{ width: 200, marginRight: 8 }}
         />
         <Button onClick={handleClearFilters}>Clear</Button>
