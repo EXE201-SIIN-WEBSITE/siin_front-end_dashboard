@@ -72,6 +72,8 @@ const OrderItemModal = ({ open, setOpen, ListOrderItem, loading }: OrderItemModa
             {!item.accessoryName ? (
               <>
                 <p>Product Name: {getProductName(item.productId || 0)}</p>
+                <p>Color: {item.colorName}</p>
+                <p>Size: {item.sizeName}</p>
                 <p>Quantity: {item.quantity}</p>
                 <p>Price: {getPriceProduct(item.productId || 0)}</p>
               </>

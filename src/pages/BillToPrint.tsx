@@ -80,6 +80,16 @@ const BillToPrint = () => {
       key: 'item'
     },
     {
+      title: 'Color',
+      dataIndex: 'color',
+      key: 'color'
+    },
+    {
+      title: 'Size',
+      dataIndex: 'size',
+      key: 'size'
+    },
+    {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity'
@@ -96,6 +106,8 @@ const BillToPrint = () => {
       return {
         key: index,
         item: getProductName(item.productId || 0),
+        color: item.colorName,
+        size: item.sizeName,
         quantity: item.quantity,
         price: getPriceProduct(item.productId || 0)
       }
@@ -103,6 +115,8 @@ const BillToPrint = () => {
       return {
         key: index,
         item: `Custom: ${item.accessoryName} - ${item.colorName} - ${item.sizeName}`,
+        color: item.colorName,
+        size: item.sizeName,
         quantity: item.quantity,
         price: getColorPrice(item.colorName) + getSizePrice(item.sizeName)
       }
