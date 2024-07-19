@@ -16,7 +16,7 @@ const OrderDetailManagement = () => {
   const { orderItem, loading: orderItemLoading } = useSelector((state: RootState) => state.orderItem)
   const [open, setOpen] = useState<boolean>(false)
   const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null)
-  const [filterStatus, setFilterStatus] = useState<string | null>(null)
+  const [filterStatus, setFilterStatus] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [orderID, setOrderID] = useState<string>('')
 
@@ -45,7 +45,7 @@ const OrderDetailManagement = () => {
     }
   }
 
-  const handleFilterChange = (value: string) => {
+  const handleFilterChange = (value: string[]) => {
     setFilterStatus(value)
   }
 
@@ -58,13 +58,13 @@ const OrderDetailManagement = () => {
   }
 
   const handleClearFilters = () => {
-    setFilterStatus(null)
+    setFilterStatus([])
     setSearchQuery('')
     setOrderID('')
   }
 
   const filteredOrderDetail = orderDetail
-    .filter((detail) => (filterStatus ? detail.orderStatus === filterStatus : true))
+    .filter((detail) => (filterStatus.length > 0 ? filterStatus.includes(detail.orderStatus) : true))
     .filter((detail) => detail.phone.includes(searchQuery))
     .filter((detail) => (orderID ? detail.id.toString().includes(orderID) : true))
 
@@ -72,7 +72,8 @@ const OrderDetailManagement = () => {
     {
       title: 'ID',
       dataIndex: 'id',
-      key: 'id'
+      key: 'id',
+      sorter: (a: OrderDetail, b: OrderDetail) => a.id - b.id
     },
     {
       title: 'Name',
@@ -153,6 +154,7 @@ const OrderDetailManagement = () => {
     <>
       <div style={{ marginBottom: 16 }}>
         <Select
+          mode='multiple'
           placeholder='Filter by status'
           onChange={handleFilterChange}
           value={filterStatus}
